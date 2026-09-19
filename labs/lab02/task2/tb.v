@@ -1,11 +1,19 @@
 // tb.v
-// Starter testbench template -- YOU complete this file.
-
 module tb;
 
-  // TODO: declare the inputs and outputs
+  localparam WIDTH = 8;
+  localparam DEPTH = 4;
 
-  // TODO: instantiate DUT here
+  reg  [$clog2(DEPTH)-1:0] t_sel;    // testbench drives this, so it is a reg
+  wire [WIDTH-1:0]         t_dout;   // the LUT drives this, so it is a wire
+
+  lut #(
+    .WIDTH (WIDTH),
+    .DEPTH (DEPTH)
+  ) DUT (
+    .sel  (t_sel),
+    .dout (t_dout)
+  );
 
   // Waveform dump configuration (DO NOT CHANGE)
   string vcd_file;
@@ -16,12 +24,16 @@ module tb;
     end
   end
 
+  integer k;
   initial begin
-    // TODO: apply different input combinations
-
+    for (k = 0; k < DEPTH; k = k + 1) begin
+      t_sel = k;
+      #5;
+    end
+    $finish;
   end
 
   initial
-    $monitor($time, " I0=%b I1=%b S=%b | Y=%b", t_i0, t_i1, t_s, t_y); // change as required
+    $monitor($time, " sel=%d | dout=%d", t_sel, t_dout);
 
 endmodule
