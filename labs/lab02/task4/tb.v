@@ -6,7 +6,7 @@
 // three waveforms in one view and see directly which implementation(s)
 // respond correctly to inputs that change faster than the delay.
 
-module tb;
+module tb; 
 
   reg  t_a, t_b;
   wire y_df, y_before, y_intra;
